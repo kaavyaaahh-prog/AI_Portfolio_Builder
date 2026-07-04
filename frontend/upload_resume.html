@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Upload Resume - AI Portfolio Builder{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="glass-card on-light fade-in-up">
+                <div class="text-center mb-4">
+                    <i class="fa-solid fa-file-pdf fa-2x text-danger"></i>
+                    <h3 class="mt-2">Upload Your Resume</h3>
+                    <p class="text-muted">PDF only, maximum size 5 MB</p>
+                </div>
+
+                <form method="POST" action="{{ url_for('resume.upload_resume') }}" enctype="multipart/form-data">
+                    <div class="mb-4">
+                        <label for="resume_file" class="btn btn-outline-primary w-100 py-3" style="border-style: dashed;">
+                            <i class="fa-solid fa-cloud-arrow-up fa-lg d-block mb-2"></i>
+                            Click to choose a PDF file
+                        </label>
+                        <input type="file" id="resume_file" name="resume_file" accept=".pdf" class="d-none" required>
+                        <p id="fileNameLabel" class="text-center text-muted mt-2 mb-0">No file chosen</p>
+                    </div>
+
+                    <button type="submit" class="btn btn-gradient w-100">
+                        <i class="fa-solid fa-wand-magic-sparkles me-1"></i> Upload & Generate Portfolio
+                    </button>
+                </form>
+
+                <a href="{{ url_for('auth.dashboard') }}" class="d-block text-center mt-4 text-muted">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

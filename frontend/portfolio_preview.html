@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+{% block title %}{{ portfolio.name or "My Portfolio" }} - AI Portfolio Builder{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/themes.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="portfolio-theme" data-theme="{{ portfolio.theme or 'midnight' }}">
+
+{% if not is_public %}
+<!-- ================= THEME PICKER ================= -->
+<div class="container mt-4">
+    <div class="glass-card on-light">
+        <h6 class="fw-semibold mb-3"><i class="fa-solid fa-palette me-2 text-primary"></i>Choose a Portfolio Theme ({{ available_themes|length }} styles)</h6>
+        <div class="d-flex flex-wrap gap-3">
+            {% for theme_name in available_themes %}
+            <a href="{{ url_for('portfolio.set_portfolio_theme', theme_name=theme_name) }}" class="text-decoration-none text-center">
+                <span class="theme-swatch portfolio-theme {{ 'active' if theme_name == portfolio.theme else '' }}"
+                      data-theme="{{ theme_name }}"
+                      style="--swatch-a: var(--primary); --swatch-b: var(--accent);"></span>
+                <div class="theme-swatch-label">{{ theme_name }}</div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- ================= HERO BANNER ================= -->
+<section class="portfolio-hero">
+    <div class="container fade-in-up">
+        <img src="https://ui-avatars.com/api/?name={{ portfolio.name or 'Student' }}&size=150&background=4f46e5&color=fff"
+             alt="Profile" class="profile-img mb-3">
+        <h1 class="mb-1">{{ portfolio.name or "Your Name" }}</h1>
+        <p class="lead mb-0">{{ portfolio.title or "Professional Title" }}</p>
+
+        {% if not is_public %}
+        <div class="mt-4">
+            <a href="{{ url_for('portfolio.edit_portfolio') }}" class="btn btn-outline-light me-2">
+                <i class="fa-solid fa-pen me-1"></i> Edit Portfolio
+            </a>
+            <a href="{{ url_for('portfolio.save_portfolio') }}" class="btn btn-outline-light me-2">
+                <i class="fa-solid fa-floppy-disk me-1"></i> Save Portfolio
+            </a>
+            {% if portfolio.status != 'published' %}
+            <a href="{{ url_for('portfolio.publish_portfolio') }}" class="btn btn-gradient">
+                <i class="fa-solid fa-globe me-1"></i> Publish Portfolio
+            </a>
+            {% else %}
+            <span class="badge bg-success p-2"><i class="fa-solid fa-check me-1"></i> Published</span>
+            {% endif %}
+        </div>
+        {% if portfolio.status == 'published' and portfolio.portfolio_url %}
+            <p class="mt-3 mb-0 small">
+                Public link: <a class="text-info" href="{{ portfolio.portfolio_url }}">{{ portfolio.portfolio_url }}</a>
+            </p>
+        {% endif %}
+        {% endif %}
+    </div>
+</section>
+
+<div class="container py-5">
+    <!-- ================= ABOUT ME ================= -->
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <h3 class="section-title">About Me</h3>
+            <p class="text-muted">{{ portfolio.about or "No summary provided yet." }}</p>
+        </div>
+        <div class="col-md-6">
+            <h3 class="section-title">Career Objective</h3>
+            <p class="text-muted">{{ portfolio.career_objective or "No career objective provided yet." }}</p>
+        </div>
+    </div>
+
+    <!-- ================= EDUCATION ================= -->
+    <div class="mb-5">
+        <h3 class="section-title">Education</h3>
+        {% if portfolio.education and portfolio.education|length > 0 %}
+            <div class="row g-3">
+                {% for edu in portfolio.education %}
+                <div class="col-md-6">
+                    <div class="glass-card on-light">
+                        <h6 class="mb-1">{{ edu.degree }}</h6>
+                        <p class="mb-0 text-muted small">{{ edu.institution }} &bull; {{ edu.year }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">No education details found.</p>
+        {% endif %}
+    </div>
+
+    <!-- ================= SKILLS ================= -->
+    <div class="mb-5">
+        <h3 class="section-title">Skills</h3>
+        <p class="fw-semibold mb-1">Technical Skills</p>
+        <div class="mb-3">
+            {% for skill in portfolio.skills.technical_skills %}
+                <span class="skill-badge">{{ skill }}</span>
+            {% else %}
+                <p class="text-muted small">No technical skills found.</p>
+            {% endfor %}
+        </div>
+        <p class="fw-semibold mb-1">Soft Skills</p>
+        <div>
+            {% for skill in portfolio.skills.soft_skills %}
+                <span class="skill-badge">{{ skill }}</span>
+            {% else %}
+                <p class="text-muted small">No soft skills found.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- ================= PROJECTS ================= -->
+    <div class="mb-5">
+        <h3 class="section-title">Projects</h3>
+        {% if portfolio.projects and portfolio.projects|length > 0 %}
+            <div class="row g-4">
+                {% for project in portfolio.projects %}
+                <div class="col-md-6">
+                    <div class="glass-card on-light h-100">
+                        <i class="fa-solid fa-diagram-project text-primary mb-2"></i>
+                        <h5>{{ project.title }}</h5>
+                        <p class="text-muted mb-0">{{ project.description }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">No projects found.</p>
+        {% endif %}
+    </div>
+
+    <!-- ================= CERTIFICATES & ACHIEVEMENTS ================= -->
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <h3 class="section-title">Certificates</h3>
+            <ul class="list-group list-group-flush">
+                {% for cert in portfolio.certificates %}
+                    <li class="list-group-item bg-transparent"><i class="fa-solid fa-certificate text-warning me-2"></i>{{ cert }}</li>
+                {% else %}
+                    <li class="list-group-item bg-transparent text-muted">No certificates found.</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h3 class="section-title">Achievements</h3>
+            <ul class="list-group list-group-flush">
+                {% for achievement in portfolio.achievements %}
+                    <li class="list-group-item bg-transparent"><i class="fa-solid fa-trophy text-warning me-2"></i>{{ achievement }}</li>
+                {% else %}
+                    <li class="list-group-item bg-transparent text-muted">No achievements found.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- ================= CONTACT ================= -->
+    <div class="text-center">
+        <h3 class="section-title">Contact</h3>
+        <div class="d-flex justify-content-center flex-wrap gap-3 mt-3">
+            {% if portfolio.email %}
+                <a href="mailto:{{ portfolio.email }}" class="btn btn-outline-primary"><i class="fa-solid fa-envelope me-1"></i>{{ portfolio.email }}</a>
+            {% endif %}
+            {% if portfolio.phone %}
+                <span class="btn btn-outline-secondary disabled"><i class="fa-solid fa-phone me-1"></i>{{ portfolio.phone }}</span>
+            {% endif %}
+            {% if portfolio.github %}
+                <a href="{{ portfolio.github }}" target="_blank" class="btn btn-outline-dark"><i class="fa-brands fa-github me-1"></i>GitHub</a>
+            {% endif %}
+            {% if portfolio.linkedin %}
+                <a href="{{ portfolio.linkedin }}" target="_blank" class="btn btn-outline-info"><i class="fa-brands fa-linkedin me-1"></i>LinkedIn</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+</div><!-- /.portfolio-theme -->
+{% endblock %}

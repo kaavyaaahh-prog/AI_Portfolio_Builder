@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}Home - AI Portfolio Builder{% endblock %}
+
+{% block content %}
+<!-- ================= HERO SECTION ================= -->
+<section class="hero-section text-center">
+    <div class="container fade-in-up">
+        <h1><i class="fa-solid fa-robot me-2"></i>AI Portfolio Builder</h1>
+        <p class="lead mt-3">Upload your resume. Let AI build your portfolio. Publish it in minutes.</p>
+        <div class="mt-4">
+            {% if session.get('user_id') %}
+                <a href="{{ url_for('resume.upload_resume') }}" class="btn btn-gradient btn-lg me-2">
+                    <i class="fa-solid fa-upload me-1"></i> Upload Resume
+                </a>
+            {% else %}
+                <a href="{{ url_for('auth.register') }}" class="btn btn-gradient btn-lg me-2">Get Started</a>
+                <a href="{{ url_for('auth.login') }}" class="btn btn-outline-light btn-lg">Login</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- ================= FEATURES SECTION ================= -->
+<section id="features" class="container py-5">
+    <h2 class="text-center section-title d-block text-center mx-auto mb-5">Features</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="glass-card on-light text-center h-100">
+                <i class="fa-solid fa-file-arrow-up fa-2x text-primary mb-3"></i>
+                <h5>Upload Resume</h5>
+                <p class="text-muted mb-0">Upload your PDF resume securely — up to 5 MB.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="glass-card on-light text-center h-100">
+                <i class="fa-solid fa-wand-magic-sparkles fa-2x text-primary mb-3"></i>
+                <h5>AI Portfolio Generation</h5>
+                <p class="text-muted mb-0">Llama3.1 (via Ollama) extracts and structures your details automatically.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="glass-card on-light text-center h-100">
+                <i class="fa-solid fa-chart-pie fa-2x text-primary mb-3"></i>
+                <h5>ATS Resume Score</h5>
+                <p class="text-muted mb-0">Get a score out of 100 with strengths, weaknesses and suggestions.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="glass-card on-light text-center h-100">
+                <i class="fa-solid fa-pen-to-square fa-2x text-primary mb-3"></i>
+                <h5>Edit & Customize</h5>
+                <p class="text-muted mb-0">Fine tune the AI-generated content before publishing.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="glass-card on-light text-center h-100">
+                <i class="fa-solid fa-globe fa-2x text-primary mb-3"></i>
+                <h5>Publish Portfolio</h5>
+                <p class="text-muted mb-0">Get a shareable public link to your live portfolio page.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="glass-card on-light text-center h-100">
+                <i class="fa-solid fa-shield-halved fa-2x text-primary mb-3"></i>
+                <h5>Secure Login</h5>
+                <p class="text-muted mb-0">Bcrypt password hashing with OTP-based password recovery.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= ABOUT SECTION ================= -->
+<section id="about" class="py-5" style="background:#eef2ff;">
+    <div class="container text-center">
+        <h2 class="section-title mb-4">About This Project</h2>
+        <p class="lead text-muted col-lg-8 mx-auto">
+            AI Portfolio Builder helps students turn their resume into a polished, shareable
+            online portfolio in a few clicks — powered by a locally running Llama3.1 model via Ollama,
+            with Flask + MySQL on the backend.
+        </p>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,7 @@
+Flask==3.0.3
+mysql-connector-python==8.4.0
+bcrypt==4.1.3
+PyMuPDF==1.24.5
+requests==2.32.3
+python-dotenv==1.0.1
+\AI_Portfolio_Builder_updated\AI_Portfolio_Builder\BACKEND> python app.py  for running command

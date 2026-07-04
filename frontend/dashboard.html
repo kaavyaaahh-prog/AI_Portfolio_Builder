@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - AI Portfolio Builder{% endblock %}
+
+{% block navbar %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- ================= SIDEBAR ================= -->
+        <div class="col-lg-2 col-md-3 sidebar p-0">
+            <div class="text-center py-3 border-bottom border-secondary border-opacity-25">
+                <i class="fa-solid fa-robot fa-lg text-white"></i>
+                <div class="text-white fw-bold mt-1">Portfolio Builder</div>
+            </div>
+            <ul class="nav flex-column mt-3">
+                <li class="nav-item"><a class="nav-link active" href="{{ url_for('auth.dashboard') }}"><i class="fa-solid fa-gauge me-2"></i>Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('resume.upload_resume') }}"><i class="fa-solid fa-file-arrow-up me-2"></i>Upload Resume</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('portfolio.preview_portfolio') }}"><i class="fa-solid fa-id-card me-2"></i>My Portfolio</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('ats.ats_score') }}"><i class="fa-solid fa-chart-pie me-2"></i>ATS Resume Score</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('internship.internship_recommendations') }}"><i class="fa-solid fa-briefcase me-2"></i>Internship Finder</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- ================= MAIN CONTENT ================= -->
+        <div class="col-lg-10 col-md-9 main-content">
+            <!-- Flash messages -->
+            <div class="mb-2">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible fade show alert-auto-dismiss" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+
+            <h2 class="fade-in-up">Welcome Student, {{ full_name }} 👋</h2>
+            <p class="text-muted mb-4">Here's an overview of your portfolio journey.</p>
+
+            <div class="row g-4">
+                <div class="col-md-3 col-sm-6">
+                    <a href="{{ url_for('resume.upload_resume') }}" class="text-decoration-none">
+                        <div class="dash-card dash-card-1 fade-in-up">
+                            <i class="fa-solid fa-file-arrow-up mb-2"></i>
+                            <h5>Upload Resume</h5>
+                            <p class="mb-0 small opacity-75">Add or replace your resume PDF</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <a href="{{ url_for('portfolio.preview_portfolio') }}" class="text-decoration-none">
+                        <div class="dash-card dash-card-2 fade-in-up">
+                            <i class="fa-solid fa-id-card mb-2"></i>
+                            <h5>My Portfolio</h5>
+                            <p class="mb-0 small opacity-75">
+                                Status: {{ portfolio.status.title() if portfolio else "Not created yet" }}
+                            </p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <a href="{{ url_for('ats.ats_score') }}" class="text-decoration-none">
+                        <div class="dash-card dash-card-3 fade-in-up">
+                            <i class="fa-solid fa-chart-pie mb-2"></i>
+                            <h5>ATS Resume Score</h5>
+                            <p class="mb-0 small opacity-75">
+                                {% if latest_ats %}Last score: {{ latest_ats.score }}/100{% else %}Not checked yet{% endif %}
+                            </p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    {% if portfolio and portfolio.status == 'published' %}
+                        <a href="{{ portfolio.portfolio_url }}" target="_blank" class="text-decoration-none">
+                            <div class="dash-card dash-card-4 fade-in-up">
+                                <i class="fa-solid fa-globe mb-2"></i>
+                                <h5>Published Portfolio</h5>
+                                <p class="mb-0 small opacity-75">View your live public page</p>
+                            </div>
+                        </a>
+                    {% else %}
+                        <div class="dash-card dash-card-4 fade-in-up">
+                            <i class="fa-solid fa-globe mb-2"></i>
+                            <h5>Published Portfolio</h5>
+                            <p class="mb-0 small opacity-75">Not published yet</p>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <a href="{{ url_for('internship.internship_recommendations') }}" class="text-decoration-none">
+                        <div class="dash-card dash-card-1 fade-in-up" style="background: linear-gradient(135deg, #0891b2, #4f46e5);">
+                            <i class="fa-solid fa-briefcase mb-2"></i>
+                            <h5>Internship Finder</h5>
+                            <p class="mb-0 small opacity-75">Real openings matched to your resume</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

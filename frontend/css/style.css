@@ -1,0 +1,268 @@
+/* ==========================================================
+   style.css
+   Global styles for AI Portfolio Builder
+   Theme: Modern gradient + glassmorphism, professional palette
+   ========================================================== */
+
+:root {
+    --primary: #4f46e5;      /* indigo */
+    --primary-dark: #3730a3;
+    --accent: #06b6d4;       /* cyan */
+    --bg-dark: #0f172a;
+    --bg-light: #f8fafc;
+    --text-light: #f1f5f9;
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.18);
+}
+
+body {
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background-color: var(--bg-light);
+    color: #1e293b;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* ---------------- Navbar ---------------- */
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.navbar-custom {
+    background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+}
+
+.navbar-custom .nav-link {
+    color: var(--text-light) !important;
+    font-weight: 500;
+}
+
+.navbar-custom .nav-link:hover {
+    color: var(--accent) !important;
+}
+
+/* ---------------- Buttons ---------------- */
+.btn-gradient {
+    background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.6rem 1.6rem;
+    border-radius: 50px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-gradient:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.35);
+    color: #fff;
+}
+
+/* ---------------- Hero Section ---------------- */
+.hero-section {
+    background: linear-gradient(135deg, var(--bg-dark) 0%, var(--primary-dark) 100%);
+    color: var(--text-light);
+    padding: 100px 0;
+}
+
+.hero-section h1 {
+    font-weight: 800;
+    font-size: 3rem;
+}
+
+.hero-section p {
+    color: #cbd5e1;
+    font-size: 1.15rem;
+}
+
+/* ---------------- Glass Cards ---------------- */
+.glass-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 18px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 2rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.glass-card.on-light {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+}
+
+.glass-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.18);
+}
+
+/* ---------------- Auth Pages ---------------- */
+.auth-wrapper {
+    min-height: calc(100vh - 140px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #eef2ff 0%, #e0f2fe 100%);
+    padding: 3rem 1rem;
+}
+
+.auth-card {
+    max-width: 460px;
+    width: 100%;
+    background: #fff;
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 15px 40px rgba(15, 23, 42, 0.12);
+}
+
+/* ---------------- Dashboard Sidebar ---------------- */
+.sidebar {
+    background: linear-gradient(180deg, var(--bg-dark) 0%, var(--primary-dark) 100%);
+    min-height: 100vh;
+    color: var(--text-light);
+    padding-top: 1.5rem;
+}
+
+.sidebar .nav-link {
+    color: #cbd5e1;
+    padding: 0.75rem 1.25rem;
+    border-radius: 10px;
+    margin: 0.2rem 0.75rem;
+    font-weight: 500;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+}
+
+.main-content {
+    padding: 2rem;
+}
+
+/* ---------------- Dashboard Cards ---------------- */
+.dash-card {
+    border-radius: 16px;
+    padding: 1.75rem;
+    color: #fff;
+    height: 100%;
+}
+
+.dash-card i {
+    font-size: 2rem;
+    opacity: 0.9;
+}
+
+.dash-card-1 { background: linear-gradient(135deg, #4f46e5, #7c3aed); }
+.dash-card-2 { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+.dash-card-3 { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.dash-card-4 { background: linear-gradient(135deg, #10b981, #059669); }
+
+/* ---------------- Portfolio Preview ---------------- */
+.portfolio-hero {
+    background: linear-gradient(135deg, var(--bg-dark), var(--primary-dark));
+    color: #fff;
+    padding: 70px 0;
+    text-align: center;
+}
+
+.profile-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #fff;
+}
+
+.section-title {
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    border-radius: 4px;
+    margin-top: 0.5rem;
+}
+
+.skill-badge {
+    display: inline-block;
+    background: #eef2ff;
+    color: var(--primary-dark);
+    padding: 0.4rem 0.9rem;
+    border-radius: 50px;
+    margin: 0.25rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* ---------------- ATS Score Page ---------------- */
+.circular-progress {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto;
+}
+
+.circular-progress svg {
+    transform: rotate(-90deg);
+}
+
+.circular-progress circle {
+    fill: none;
+    stroke-width: 14;
+}
+
+.circular-progress .bg-ring {
+    stroke: #e2e8f0;
+}
+
+.circular-progress .progress-ring {
+    stroke: url(#gradientStroke);
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s ease;
+}
+
+.circular-progress .score-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+}
+
+/* ---------------- Footer ---------------- */
+footer {
+    background: var(--bg-dark);
+    color: #94a3b8;
+    padding: 2rem 0;
+    text-align: center;
+}
+
+/* ---------------- Utility ---------------- */
+.fade-in-up {
+    animation: fadeInUp 0.6s ease both;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .hero-section h1 { font-size: 2.1rem; }
+    .sidebar { min-height: auto; }
+}

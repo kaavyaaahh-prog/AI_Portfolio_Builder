@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}Internship Recommendations - AI Portfolio Builder{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center section-title d-block mx-auto text-center mb-4">
+        <i class="fa-solid fa-briefcase text-primary me-2"></i>Internship Recommendations
+    </h2>
+    <p class="text-center text-muted mb-5">
+        Based on the skills detected in your resume, here are the roles you're a good fit for,
+        plus real internship/job openings currently live for those roles.
+    </p>
+
+    <!-- ============ Detected Skills ============ -->
+    <div class="mb-4">
+        <h6 class="fw-semibold mb-2"><i class="fa-solid fa-fingerprint me-1 text-primary"></i>Detected Skills from Your Resume</h6>
+        <div>
+            {% for skill in technical_skills %}
+                <span class="skill-badge">{{ skill }}</span>
+            {% else %}
+                <p class="text-muted small mb-0">No technical skills detected yet. Try re-uploading a more detailed resume.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- ============ Recommended Roles ============ -->
+    <div class="mb-5">
+        <h6 class="fw-semibold mb-2"><i class="fa-solid fa-star me-1 text-warning"></i>Recommended Roles for You</h6>
+        <div class="d-flex flex-wrap gap-2">
+            {% for role in recommended_roles %}
+                <a href="{{ url_for('internship.internship_recommendations', role=role, location=location) }}"
+                   class="btn btn-sm {{ 'btn-gradient' if role == selected_role else 'btn-outline-primary' }} rounded-pill">
+                    {{ role }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- ============ Filter Form ============ -->
+    <form method="GET" action="{{ url_for('internship.internship_recommendations') }}" class="glass-card on-light mb-5">
+        <div class="row g-3 align-items-end">
+            <div class="col-md-5">
+                <label class="form-label fw-semibold">Role / Keyword</label>
+                <input type="text" name="role" class="form-control" value="{{ selected_role }}" placeholder="e.g. Data Analyst Intern">
+            </div>
+            <div class="col-md-5">
+                <label class="form-label fw-semibold">Location</label>
+                <input type="text" name="location" class="form-control" value="{{ location }}" placeholder="e.g. Coimbatore, Chennai, Remote">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-gradient w-100"><i class="fa-solid fa-magnifying-glass me-1"></i>Search</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- ============ Live Listings ============ -->
+    <h6 class="fw-semibold mb-3">
+        <i class="fa-solid fa-globe me-1 text-info"></i>
+        Current Openings {% if selected_role %}for "{{ selected_role }}"{% endif %}
+        {% if location %} in {{ location }}{% endif %}
+    </h6>
+
+    {% if not configured %}
+        <div class="glass-card on-light text-center">
+            <i class="fa-solid fa-plug-circle-exclamation fa-2x text-warning mb-3"></i>
+            <p class="mb-1 fw-semibold">Live internship listings aren't connected yet.</p>
+            <p class="text-muted small mb-0">
+                Add a free Adzuna API key in <code>backend/config.py</code>
+                (<code>ADZUNA_APP_ID</code> / <code>ADZUNA_APP_KEY</code>) to pull real, currently-open
+                internships here automatically. Sign up free at
+                <a href="https://developer.adzuna.com/" target="_blank">developer.adzuna.com</a>.
+            </p>
+        </div>
+    {% elif listings and listings|length > 0 %}
+        <div class="row g-4">
+            {% for job in listings %}
+            <div class="col-md-6">
+                <div class="glass-card on-light h-100">
+                    <h5 class="mb-1">{{ job.title }}</h5>
+                    <p class="mb-1 text-primary fw-semibold"><i class="fa-solid fa-building me-1"></i>{{ job.company }}</p>
+                    <p class="mb-2 text-muted small">
+                        <i class="fa-solid fa-location-dot me-1"></i>{{ job.location }}
+                        {% if job.posted %} &bull; <i class="fa-solid fa-calendar me-1"></i>Posted {{ job.posted }}{% endif %}
+                    </p>
+                    {% if job.salary %}
+                        <p class="mb-2 small"><i class="fa-solid fa-indian-rupee-sign me-1 text-success"></i>{{ job.salary }}</p>
+                    {% endif %}
+                    <p class="text-muted small mb-3">{{ job.description }}{% if job.description %}...{% endif %}</p>
+                    <a href="{{ job.url }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                        Apply / View Details <i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="glass-card on-light text-center">
+            <i class="fa-solid fa-magnifying-glass-minus fa-2x text-muted mb-3"></i>
+            <p class="mb-0 text-muted">No current openings found for this search. Try a different role or location.</p>
+        </div>
+    {% endif %}
+
+    <div class="text-center mt-5">
+        <a href="{{ url_for('auth.dashboard') }}" class="btn btn-outline-secondary">
+            <i class="fa-solid fa-arrow-left me-1"></i> Back to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}

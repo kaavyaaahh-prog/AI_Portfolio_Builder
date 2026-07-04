@@ -1,0 +1,182 @@
+/* ==========================================================
+   themes.css
+   17 selectable portfolio themes.
+
+   How it works:
+   - Every theme just re-defines the same handful of CSS
+     variables (--primary, --primary-dark, --accent, --bg-dark,
+     --text-light) inside a scope: .portfolio-theme[data-theme="X"]
+   - portfolio_preview.html wraps the whole page body in
+     <div class="portfolio-theme" data-theme="{{ portfolio.theme }}">
+     so every existing component (glass-card, skill-badge,
+     portfolio-hero, btn-gradient, section-title...) automatically
+     re-colors itself. No component markup needs to change.
+   - "midnight" matches the app's original default look, so
+     existing portfolios keep looking the same until the
+     student picks a new theme.
+   ========================================================== */
+
+.portfolio-theme[data-theme="midnight"] {
+    --primary: #4f46e5;
+    --primary-dark: #3730a3;
+    --accent: #06b6d4;
+    --bg-dark: #0f172a;
+    --text-light: #f1f5f9;
+}
+
+.portfolio-theme[data-theme="sunset"] {
+    --primary: #f97316;
+    --primary-dark: #c2410c;
+    --accent: #f43f5e;
+    --bg-dark: #451a03;
+    --text-light: #fff7ed;
+}
+
+.portfolio-theme[data-theme="ocean"] {
+    --primary: #0284c7;
+    --primary-dark: #075985;
+    --accent: #22d3ee;
+    --bg-dark: #0c2d48;
+    --text-light: #ecfeff;
+}
+
+.portfolio-theme[data-theme="forest"] {
+    --primary: #16a34a;
+    --primary-dark: #14532d;
+    --accent: #84cc16;
+    --bg-dark: #052e16;
+    --text-light: #f0fdf4;
+}
+
+.portfolio-theme[data-theme="royal"] {
+    --primary: #7c3aed;
+    --primary-dark: #4c1d95;
+    --accent: #eab308;
+    --bg-dark: #1e1b4b;
+    --text-light: #f5f3ff;
+}
+
+.portfolio-theme[data-theme="rosegold"] {
+    --primary: #e11d48;
+    --primary-dark: #9f1239;
+    --accent: #fbbf24;
+    --bg-dark: #4c0519;
+    --text-light: #fff1f2;
+}
+
+.portfolio-theme[data-theme="cyberpunk"] {
+    --primary: #ec4899;
+    --primary-dark: #831843;
+    --accent: #22ff9f;
+    --bg-dark: #0a0014;
+    --text-light: #f5d0fe;
+}
+
+.portfolio-theme[data-theme="minimal"] {
+    --primary: #334155;
+    --primary-dark: #0f172a;
+    --accent: #64748b;
+    --bg-dark: #1e293b;
+    --text-light: #f8fafc;
+}
+
+.portfolio-theme[data-theme="corporate"] {
+    --primary: #1d4ed8;
+    --primary-dark: #1e3a8a;
+    --accent: #64748b;
+    --bg-dark: #0b1727;
+    --text-light: #eff6ff;
+}
+
+.portfolio-theme[data-theme="pastel"] {
+    --primary: #a78bfa;
+    --primary-dark: #7c3aed;
+    --accent: #5eead4;
+    --bg-dark: #312e81;
+    --text-light: #f5f3ff;
+}
+
+.portfolio-theme[data-theme="crimson"] {
+    --primary: #dc2626;
+    --primary-dark: #7f1d1d;
+    --accent: #f59e0b;
+    --bg-dark: #1c0a0a;
+    --text-light: #fef2f2;
+}
+
+.portfolio-theme[data-theme="emerald"] {
+    --primary: #059669;
+    --primary-dark: #065f46;
+    --accent: #eab308;
+    --bg-dark: #022c22;
+    --text-light: #ecfdf5;
+}
+
+.portfolio-theme[data-theme="arctic"] {
+    --primary: #0ea5e9;
+    --primary-dark: #0369a1;
+    --accent: #a5f3fc;
+    --bg-dark: #082f49;
+    --text-light: #f0f9ff;
+}
+
+.portfolio-theme[data-theme="coffee"] {
+    --primary: #92400e;
+    --primary-dark: #451a03;
+    --accent: #d97706;
+    --bg-dark: #291409;
+    --text-light: #fef3c7;
+}
+
+.portfolio-theme[data-theme="lavender"] {
+    --primary: #8b5cf6;
+    --primary-dark: #5b21b6;
+    --accent: #f0abfc;
+    --bg-dark: #2e1065;
+    --text-light: #faf5ff;
+}
+
+.portfolio-theme[data-theme="golden"] {
+    --primary: #b45309;
+    --primary-dark: #78350f;
+    --accent: #fde047;
+    --bg-dark: #1c1408;
+    --text-light: #fefce8;
+}
+
+.portfolio-theme[data-theme="slate"] {
+    --primary: #475569;
+    --primary-dark: #1e293b;
+    --accent: #fb923c;
+    --bg-dark: #0f172a;
+    --text-light: #f1f5f9;
+}
+
+/* ---------------- Theme picker swatches (used on the private preview page) ---------------- */
+.theme-swatch {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    cursor: pointer;
+    display: inline-block;
+    transition: transform 0.2s ease;
+    background: linear-gradient(135deg, var(--swatch-a), var(--swatch-b));
+}
+
+.theme-swatch:hover {
+    transform: scale(1.12);
+}
+
+.theme-swatch.active {
+    border-color: #1e293b;
+    box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.15);
+}
+
+.theme-swatch-label {
+    font-size: 0.72rem;
+    text-align: center;
+    margin-top: 0.35rem;
+    color: #475569;
+    text-transform: capitalize;
+}

@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}ATS Resume Score - AI Portfolio Builder{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center section-title d-block mx-auto text-center mb-5">
+        <i class="fa-solid fa-chart-pie text-primary me-2"></i>ATS Resume Score
+    </h2>
+
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-4 text-center fade-in-up">
+            <!-- ============ Circular Progress Bar (SVG) ============ -->
+            <div class="circular-progress">
+                <svg width="180" height="180" viewBox="0 0 180 180">
+                    <defs>
+                        <linearGradient id="gradientStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#4f46e5"/>
+                            <stop offset="100%" stop-color="#06b6d4"/>
+                        </linearGradient>
+                    </defs>
+                    <circle class="bg-ring" cx="90" cy="90" r="78"></circle>
+                    <circle class="progress-ring" cx="90" cy="90" r="78" data-score="{{ result.overall_score }}"></circle>
+                </svg>
+                <div class="score-text">{{ result.overall_score }}%</div>
+            </div>
+            <p class="text-muted mt-3">Overall ATS Score (out of 100)</p>
+
+            <!-- Linear progress bar as a secondary indicator -->
+            <div class="progress" style="height: 10px;">
+                <div class="progress-bar" role="progressbar"
+                     style="width: {{ result.overall_score }}%; background: linear-gradient(90deg, #4f46e5, #06b6d4);"
+                     aria-valuenow="{{ result.overall_score }}" aria-valuemin="0" aria-valuemax="100">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ Suggestion Cards ============ -->
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="glass-card on-light h-100">
+                <h5 class="text-success"><i class="fa-solid fa-circle-check me-2"></i>Strengths</h5>
+                <ul class="mb-0">
+                    {% for item in result.strengths %}
+                        <li>{{ item }}</li>
+                    {% else %}
+                        <li class="text-muted">No specific strengths identified.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="glass-card on-light h-100">
+                <h5 class="text-danger"><i class="fa-solid fa-circle-xmark me-2"></i>Weaknesses</h5>
+                <ul class="mb-0">
+                    {% for item in result.weaknesses %}
+                        <li>{{ item }}</li>
+                    {% else %}
+                        <li class="text-muted">No specific weaknesses identified.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="glass-card on-light h-100">
+                <h5 class="text-primary"><i class="fa-solid fa-lightbulb me-2"></i>Suggestions</h5>
+                <ul class="mb-0">
+                    {% for item in result.suggestions %}
+                        <li>{{ item }}</li>
+                    {% else %}
+                        <li class="text-muted">No suggestions available.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="glass-card on-light h-100">
+                <h5 class="text-warning"><i class="fa-solid fa-key me-2"></i>Missing Keywords</h5>
+                <div>
+                    {% for keyword in result.missing_keywords %}
+                        <span class="skill-badge">{{ keyword }}</span>
+                    {% else %}
+                        <p class="text-muted mb-0">No missing keywords detected.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <a href="{{ url_for('auth.dashboard') }}" class="btn btn-outline-secondary">
+            <i class="fa-solid fa-arrow-left me-1"></i> Back to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}
