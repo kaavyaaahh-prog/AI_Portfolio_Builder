@@ -16,10 +16,11 @@ class Config:
     SECRET_KEY = "change-this-secret-key-in-production"
 
     # ---------------- MySQL ----------------
-    MYSQL_HOST = "localhost"
-    MYSQL_USER = "root"
-    MYSQL_PASSWORD = "your_mysql_password"   # <-- change this
-    MYSQL_DATABASE = "ai_portfolio_builder"
+    MYSQL_HOST = os.environ.get("MYSQL_HOST", "localhost")
+    MYSQL_USER = os.environ.get("MYSQL_USER", "root")
+    MYSQL_PASSWORD = os.environ.get("MYSQL_PASSWORD", "your_mysql_password")
+    MYSQL_DATABASE = os.environ.get("MYSQL_DATABASE", "ai_portfolio_builder")
+    MYSQL_PORT = os.environ.get("MYSQL_PORT", "3306")
 
     # ---------------- File Upload ----------------
     UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads", "resumes")
